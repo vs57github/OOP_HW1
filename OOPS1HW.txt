@@ -1,0 +1,74 @@
+// Определяем класс ГорячийНапиток
+public class HotBeverage {
+    private String name;
+    private int volume;
+    
+    public HotBeverage(String name, int volume) {
+        this.name = name;
+        this.volume = volume;
+    }
+    
+    // Геттеры и сеттеры для полей name и volume
+    
+    // Добавляем метод, возвращающий информацию о горячем напитке
+    public String getInfo() {
+        return "Название: " + name + ", Объем: " + volume + " мл";
+    }
+}
+
+// Определяем класс-наследник ГорячийНапиток
+public class HotDrink extends HotBeverage {
+    private int temperature;
+    
+    public HotDrink(String name, int volume, int temperature) {
+        super(name, volume);
+        this.temperature = temperature;
+    }
+    
+    // Геттер и сеттер для поля temperature
+    
+    // Переопределяем метод getInfo, чтобы включить информацию о температуре
+    @Override
+    public String getInfo() {
+        return super.getInfo() + ", Температура: " + temperature + " °C";
+    }
+}
+
+// Определяем интерфейс ТорговыйАвтомат
+public interface VendingMachine {
+    void getProduct(int name, int volume); // Метод для получения продукта
+    void getProduct(int name, int volume, int temperature); // Перегруженный метод для получения продукта с учетом температуры
+}
+
+// Определяем класс ГорячихНапитковАвтомат, реализующий интерфейс ТорговыйАвтомат
+public class HotBeverageMachine implements VendingMachine {
+    @Override
+    public void getProduct(int name, int volume) {
+        System.out.println("Выдан горячий напиток " + name + " в объеме " + volume + " мл");
+    }
+    
+    @Override
+    public void getProduct(int name, int volume, int temperature) {
+        System.out.println("Выдан горячий напиток " + name + " в объеме " + volume + " мл с температурой " + temperature + " °C");
+    }
+}
+
+// Пример использования классов
+public class Main {
+    public static void main(String[] args) {
+        // Создаем объекты горячих напитков
+        HotBeverage coffee = new HotBeverage("Кофе", 200);
+        HotDrink tea = new HotDrink("Чай", 150, 70);
+        
+        // Выводим информацию о горячих напитках
+        System.out.println(coffee.getInfo());
+        System.out.println(tea.getInfo());
+        
+        // Создаем объект горячих напитков автомат
+        HotBeverageMachine vendingMachine = new HotBeverageMachine();
+        
+        // Получаем продукты из автомата
+        vendingMachine.getProduct(1, 200);
+        vendingMachine.getProduct(2, 150, 70);
+    }
+}
